@@ -24,4 +24,15 @@ public class CheckItemServiceImpl implements CheckItemService {
         List<CheckItem> checkItemList = checkItemDao.findAll();
         return checkItemList;
     }
+
+    /**
+     * 新增检查项
+     * @param checkItem
+     * @return
+     */
+    @Override
+    public boolean add(CheckItem checkItem) {
+        int row = checkItemDao.add(checkItem);
+        return row>0;
+    }
 }

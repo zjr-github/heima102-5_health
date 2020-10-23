@@ -10,4 +10,11 @@ public interface CheckItemDao {
      * @return
      */
     List<CheckItem> findAll();
+
+    /**
+     * 新增检查项
+     * @param checkItem
+     * @return
+     */
+    int add(CheckItem checkItem);
 }

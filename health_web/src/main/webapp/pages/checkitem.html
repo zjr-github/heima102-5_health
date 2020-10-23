@@ -244,15 +244,41 @@
                 },
                 //添加
                 handleAdd () {
+                    //校验表单输入项是否合法
+                    this.$refs['dataAddForm'].validate((valid) => {
+                        if (valid) {
+                            //隐藏新增窗口
+                            this.dialogFormVisible = false;
+                            //表单数据校验通过，发送ajax请求将表单数据提交到后台
+                            axios.post('/checkItem/add.do',this.formData).then(res => {
+                                //判断后台返回的flag值，true表示添加操作成功，false为添加操作失败
+                                if (res.data.flag) {
+                                    // 成功
+                                    this.$message({message: res.data.message, type: 'success'});
+                                    //绑定数据
+                                } else {
+                                    //失败
+                                    this.$message({methods: res.data.message, type: 'error'});
+                                }
+                            });
+                        }else {
+                            this.$message.error("表单数据校验失败");
+                            return false;
+                        }
+                    });
                 },
                 //分页查询
                 findPage() {
                 },
                 // 重置表单
                 resetForm() {
+                    //还原为初始的值
+                    this.formData = {};
                 },
                 // 弹出添加窗口
                 handleCreate() {
+                    this.resetForm();
+                    this.dialogFormVisible = true;
                 },
                 // 弹出编辑窗口
                 handleUpdate(row) {
