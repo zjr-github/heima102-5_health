@@ -7,6 +7,7 @@ import com.itheima.health.entity.QueryPageBean;
 import com.itheima.health.entity.Result;
 import com.itheima.health.pojo.CheckItem;
 import com.itheima.health.service.CheckItemService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,12 +32,7 @@ public class CheckItemController {
     public Result findAll(){
         // 调用服务查询
         List<CheckItem> checkItemList = checkItemService.findAll();
-
-        if (checkItemList!=null){
-            return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS,checkItemList);
-        }else {
-            return new Result(false, MessageConstant.QUERY_CHECKITEM_FAIL);
-        }
+        return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS,checkItemList);
     }
 
     /**
@@ -48,7 +44,7 @@ public class CheckItemController {
     public Result add(@RequestBody CheckItem checkItem){
         // 调用服务添加
        boolean flag = checkItemService.add(checkItem);
-       return new Result(flag,flag?MessageConstant.ADD_CHECKITEM_SUCCESS:MessageConstant.ADD_CHECKITEM_FAIL);
+       return new Result(flag,MessageConstant.ADD_CHECKITEM_SUCCESS);
     }
 
     /**
@@ -65,5 +61,17 @@ public class CheckItemController {
         return new Result(true,MessageConstant.QUERY_CHECKITEM_SUCCESS,pageResult);
     }
 
+    /**
+     * 删除检查项
+     * @param id
+     * @return
+     */
+    @GetMapping("deleteById")
+    public Result deleteById(int id){
+        // 调用业务服务
+        checkItemService.deleteById(id);
+        // 响应结果
+        return new Result(true,MessageConstant.DELETE_CHECKITEM_SUCCESS);
+    }
 
 }

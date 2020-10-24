@@ -29,4 +29,10 @@ public interface CheckItemService {
      * @return
      */
     PageResult<CheckItem> findPage(QueryPageBean queryPageBean);
+
+    /**
+     *删除检查项
+     * @param id
+     */
+    void deleteById(int id);
 }

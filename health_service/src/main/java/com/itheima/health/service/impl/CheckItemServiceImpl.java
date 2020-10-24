@@ -4,9 +4,11 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.StringUtil;
+import com.itheima.health.constant.MessageConstant;
 import com.itheima.health.dao.CheckItemDao;
 import com.itheima.health.entity.PageResult;
 import com.itheima.health.entity.QueryPageBean;
+import com.itheima.health.exception.HealthException;
 import com.itheima.health.pojo.CheckItem;
 import com.itheima.health.service.CheckItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +61,23 @@ public class CheckItemServiceImpl implements CheckItemService {
         Page<CheckItem> page = checkItemDao.findPage(queryPageBean.getQueryString());
         // 封装到分页结果对象中
         return new PageResult<CheckItem>(page.getTotal(),page.getResult());
+    }
+
+    /**
+     * 删除检查项
+     * @param id
+     */
+    @Override
+    public void deleteById(int id) {
+        //先判断这个检查项是否被检查组使用了
+        //调用dao查询检查项的id是否在t_checkgroup_checkitem表中存在记录
+       int cnt = checkItemDao.findCountByCheckItemId(id);
+        //被使用了则不能删除
+        if (cnt>0){
+            // 已经被检查组使用了，则不能删除，报自定义异常错误
+            throw new HealthException(MessageConstant.CHECKITEM_IN_USE);
+        }
+        //没使用就可以调用dao删除
+        checkItemDao.deleteById(id);
     }
 }
