@@ -225,7 +225,7 @@
             },
             //钩子函数，VUE对象初始化完成后自动执行
             created() {
-                // 发送请求到后台获取检查项列表数据，
+                /*// 发送请求到后台获取检查项列表数据，
                 // 查询数据get, 条件查询post(复杂查询条件), post:修改或创建数据
                 axios.get('/checkItem/findAll.do').then(res => {
                     if (res.data.flag) {
@@ -236,7 +236,9 @@
                         //失败
                         this.$message({methods: res.data.message,type:"error"});
                     }
-                })
+                })*/
+
+                this.findPage()
             },
             methods: {
                 //编辑
@@ -269,6 +271,21 @@
                 },
                 //分页查询
                 findPage() {
+                    // 发送查询的请求，提交pagination(currentPage,pageSize)
+                    axios.post('/checkItem/findPage.do',this.pagination).then(res => {
+                        if (res.data.flag) {
+                            // 成功
+                            //绑定数据
+                            // 分页的结果
+                            this.dataList = res.data.data.rows;
+                            // 总记录
+                            this.pagination.total = res.data.data.total;
+
+                        } else {
+                            //失败
+                            this.$message({methods: res.data.message, type: "error"});
+                        }
+                    });
                 },
                 // 重置表单
                 resetForm() {
@@ -285,6 +302,11 @@
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {
+                    //currentPage 为修改后的页面
+                    // 设置分页查询时使用的页码
+                    this.pagination.currentPage = currentPage;
+                    // 分页查询
+                    this.findPage()
                 },
                 // 删除
                 handleDelete(row) {

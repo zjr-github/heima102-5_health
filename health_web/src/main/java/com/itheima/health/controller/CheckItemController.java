@@ -2,6 +2,8 @@ package com.itheima.health.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.itheima.health.constant.MessageConstant;
+import com.itheima.health.entity.PageResult;
+import com.itheima.health.entity.QueryPageBean;
 import com.itheima.health.entity.Result;
 import com.itheima.health.pojo.CheckItem;
 import com.itheima.health.service.CheckItemService;
@@ -48,4 +50,20 @@ public class CheckItemController {
        boolean flag = checkItemService.add(checkItem);
        return new Result(flag,flag?MessageConstant.ADD_CHECKITEM_SUCCESS:MessageConstant.ADD_CHECKITEM_FAIL);
     }
+
+    /**
+     * 分页条件查询
+     * @param queryPageBean
+     * @return
+     */
+    @RequestMapping("findPage")
+    public Result findPage(@RequestBody QueryPageBean queryPageBean){
+        // 调用业务来分页，获取分页结果
+       PageResult<CheckItem> pageResult = checkItemService.findPage(queryPageBean);
+        //return pageResult;
+        // 返回给页面, 包装到Result, 统一风格
+        return new Result(true,MessageConstant.QUERY_CHECKITEM_SUCCESS,pageResult);
+    }
+
+
 }

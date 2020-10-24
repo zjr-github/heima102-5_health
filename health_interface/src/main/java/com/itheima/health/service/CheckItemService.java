@@ -1,5 +1,7 @@
 package com.itheima.health.service;
 
+import com.itheima.health.entity.PageResult;
+import com.itheima.health.entity.QueryPageBean;
 import com.itheima.health.pojo.CheckItem;
 
 import java.util.List;
@@ -20,4 +22,11 @@ public interface CheckItemService {
      * @return
      */
     boolean add(CheckItem checkItem);
+
+    /**
+     * 分页条件查询
+     * @param queryPageBean
+     * @return
+     */
+    PageResult<CheckItem> findPage(QueryPageBean queryPageBean);
 }

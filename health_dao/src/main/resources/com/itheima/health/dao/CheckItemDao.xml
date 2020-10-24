@@ -12,4 +12,12 @@
     <insert id="add" parameterType="CheckItem">
         insert into t_checkitem(code,name,sex,age,price,type,remark,attention) values(#{code},#{name},#{sex},#{age},#{price},#{type},#{remark},#{attention})
     </insert>
+
+    <!--分页条件查询-->
+    <select id="findPage" parameterType="String" resultType="CheckItem">
+        select * from t_checkitem
+        <if test="value !=null and value.length > 0">
+            where code like #{value} or name like #{value}
+        </if>
+    </select>
 </mapper>

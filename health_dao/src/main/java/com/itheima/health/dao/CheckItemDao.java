@@ -1,5 +1,6 @@
 package com.itheima.health.dao;
 
+import com.github.pagehelper.Page;
 import com.itheima.health.pojo.CheckItem;
 
 import java.util.List;
@@ -17,4 +18,11 @@ public interface CheckItemDao {
      * @return
      */
     int add(CheckItem checkItem);
+
+    /**
+     * 分页条件查询
+     * @param queryString
+     * @return
+     */
+    Page<CheckItem> findPage(String queryString);
 }
