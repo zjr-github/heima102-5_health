@@ -243,6 +243,29 @@
             methods: {
                 //编辑
                 handleEdit() {
+                    //校验表单输入项是否合法
+                    this.$refs['dataEditForm'].validate((valid) => {
+                        if (valid) {
+                            //隐藏编辑窗口
+                            this.dialogFormVisible4Edit = false;
+                            //表单数据校验通过，发送ajax请求将表单数据提交到后台
+                            axios.post('/checkItem/update.do',this.formData).then(res => {
+                                //判断后台返回的flag值，true表示添加操作成功，false为添加操作失败
+                                if (res.data.flag) {
+                                    // 成功
+                                    this.$message({message: res.data.message, type: 'success'});
+                                    // 刷新列表数据
+                                    this.findPage();
+                                } else {
+                                    //失败
+                                    this.$message({methods: res.data.message, type: 'error'});
+                                }
+                            });
+                        }else {
+                            this.$message.error("表单数据校验失败");
+                            return false;
+                        }
+                    });
                 },
                 //添加
                 handleAdd () {
@@ -257,7 +280,8 @@
                                 if (res.data.flag) {
                                     // 成功
                                     this.$message({message: res.data.message, type: 'success'});
-                                    //绑定数据
+                                    // 刷新列表数据
+                                    this.findPage();
                                 } else {
                                     //失败
                                     this.$message({methods: res.data.message, type: 'error'});
@@ -299,6 +323,24 @@
                 },
                 // 弹出编辑窗口
                 handleUpdate(row) {
+                    // 要编辑的检查项id
+                    var id = row.id;
+
+                    // 重置表单
+                    this.resetForm();
+                    // 弹出编辑窗口
+                    this.dialogFormVisible4Edit = true;
+                    // 回显 发送请求
+                    axios.get('/checkItem/findById.do?id='+id).then(res => {
+                        if (res.data.flag) {
+                            // 成功
+                            //绑定数据
+                            this.formData = res.data.data;
+                        } else {
+                            //失败
+                            this.$message({methods: res.data.message, type: "error"});
+                        }
+                    })
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {

@@ -2,6 +2,7 @@ package com.itheima.health.service;
 
 import com.itheima.health.entity.PageResult;
 import com.itheima.health.entity.QueryPageBean;
+import com.itheima.health.exception.HealthException;
 import com.itheima.health.pojo.CheckItem;
 
 import java.util.List;
@@ -34,5 +35,18 @@ public interface CheckItemService {
      *删除检查项
      * @param id
      */
-    void deleteById(int id);
+    void deleteById(int id) throws HealthException;
+
+    /**
+     * 通过id查询
+     * @param id
+     * @return
+     */
+    CheckItem findById(int id);
+
+    /**
+     * 编辑检查项
+     * @param checkItem
+     */
+    void update(CheckItem checkItem);
 }

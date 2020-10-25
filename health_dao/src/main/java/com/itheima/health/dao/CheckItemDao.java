@@ -38,4 +38,17 @@ public interface CheckItemDao {
      * @param id
      */
     void deleteById(int id);
+
+    /**
+     * 通过id查询
+     * @param id
+     * @return
+     */
+    CheckItem findById(int id);
+
+    /**
+     * 编辑检查项
+     * @param checkItem
+     */
+    void update(CheckItem checkItem);
 }

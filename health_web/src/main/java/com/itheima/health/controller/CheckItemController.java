@@ -7,10 +7,7 @@ import com.itheima.health.entity.QueryPageBean;
 import com.itheima.health.entity.Result;
 import com.itheima.health.pojo.CheckItem;
 import com.itheima.health.service.CheckItemService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -72,6 +69,32 @@ public class CheckItemController {
         checkItemService.deleteById(id);
         // 响应结果
         return new Result(true,MessageConstant.DELETE_CHECKITEM_SUCCESS);
+    }
+
+    /**
+     * 通过id查询
+     * @param id
+     * @return
+     */
+    @GetMapping("findById")
+    public Result findById(int id){
+        // 调用业务服务
+        CheckItem checkItem = checkItemService.findById(id);
+        // 响应结果
+        return  new Result(true,MessageConstant.QUERY_CHECKITEM_SUCCESS,checkItem);
+    }
+
+    /**
+     * 编辑检查项
+     * @param checkItem
+     * @return
+     */
+    @PostMapping("update")
+    public Result update(@RequestBody CheckItem checkItem){
+        // 调用业务服务
+        checkItemService.update(checkItem);
+        // 响应结果
+        return  new Result(true,MessageConstant.EDIT_CHECKITEM_SUCCESS);
     }
 
 }

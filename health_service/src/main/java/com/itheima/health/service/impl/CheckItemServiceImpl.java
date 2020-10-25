@@ -68,10 +68,10 @@ public class CheckItemServiceImpl implements CheckItemService {
      * @param id
      */
     @Override
-    public void deleteById(int id) {
+    public void deleteById(int id) throws HealthException{
         //先判断这个检查项是否被检查组使用了
         //调用dao查询检查项的id是否在t_checkgroup_checkitem表中存在记录
-       int cnt = checkItemDao.findCountByCheckItemId(id);
+        int cnt = checkItemDao.findCountByCheckItemId(id);
         //被使用了则不能删除
         if (cnt>0){
             // 已经被检查组使用了，则不能删除，报自定义异常错误
@@ -79,5 +79,24 @@ public class CheckItemServiceImpl implements CheckItemService {
         }
         //没使用就可以调用dao删除
         checkItemDao.deleteById(id);
+    }
+
+    /**
+     * 通过id查询
+     * @param id
+     * @return
+     */
+    @Override
+    public CheckItem findById(int id) {
+        return checkItemDao.findById(id);
+    }
+
+    /**
+     * 编辑检查项
+     * @param checkItem
+     */
+    @Override
+    public void update(CheckItem checkItem) {
+        checkItemDao.update(checkItem);
     }
 }
