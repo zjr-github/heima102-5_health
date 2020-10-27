@@ -65,4 +65,11 @@ public interface CheckGroupDao {
      * @return
      */
     int findSetMealCountByCheckGroupId(int id);
+
+    /**
+     * 查询所有检查组
+     * @return
+     */
+    List<CheckGroup> findAll();
+
 }

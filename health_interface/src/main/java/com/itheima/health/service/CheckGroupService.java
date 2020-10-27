@@ -49,4 +49,11 @@ public interface CheckGroupService {
      * 【注意】这里的异常是我们自己抛出的异常类
      */
     void deleteById(int id) throws HealthException;
+
+    /**
+     * 查询所有检查组
+     * @return
+     */
+    List<CheckGroup> findAll();
+
 }

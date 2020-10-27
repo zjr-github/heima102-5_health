@@ -109,7 +109,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
      */
     @Override
     @Transactional
-    public void deleteById(int id) throws HealthException {
+    public void deleteById(int id) {
         // 检查 这个检查组是否被套餐使用了
         int cnt = checkGroupDao.findSetMealCountByCheckGroupId(id);
         if (cnt>0) {
@@ -120,5 +120,14 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         checkGroupDao.deleteCheckGroupCheckItem(id);
         // 删除检查组
         checkGroupDao.deleteById(id);
+    }
+
+    /**
+     * 查询所有检查组
+     * @return
+     */
+    @Override
+    public List<CheckGroup> findAll() {
+        return checkGroupDao.findAll();
     }
 }
