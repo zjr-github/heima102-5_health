@@ -115,4 +115,13 @@ public class SetMealServiceImpl implements SetMealService {
         // 再删除套餐
         setMealDao.deleteById(id);
     }
+
+    /**
+     * 查数据中套餐的所有图片
+     * @return
+     */
+    @Override
+    public List<String> findImg() {
+        return setMealDao.findImg();
+    }
 }

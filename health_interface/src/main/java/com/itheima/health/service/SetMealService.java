@@ -48,4 +48,11 @@ public interface SetMealService {
      * @param id
      */
     void deleteById(int id) throws HealthException;
+
+    /**
+     * 查数据中套餐的所有图片
+     * @return
+     */
+    List<String> findImg();
+
 }
