@@ -23,11 +23,11 @@ public class QiNiuUtils {
     private static final String BUCKET = "heima-health-zjr";
     public static final String DOMAIN= "http://qiqiqiu5n.hn-bkt.clouddn.com/";
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         //uploadFile("D:\\Study\\学习资料\\就业班资料\\day54-传智健康day03\\资料\\图片资源\\e373b2eb-0e50-4e95-a09b-03f2c1ee1d351.jpg","dd2.jpg");
         //removeFiles("dd2.jpg");
         //listFile();
-    }
+    }*/
 
     /**
      * 遍历7牛上的所有图片

@@ -155,6 +155,33 @@
                 },
 				//预约设置
                 handleOrderSet(day){
+
+                    this.$prompt('请输入数量', '预约设置', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        inputPattern: /^[1-9]\d*$/,
+                        inputErrorMessage: '请输入自然数'
+                    }).then(({ value }) => {
+                        //alert(value);
+                        var year = day.getFullYear();
+                        var month = day.getMonth() + 1;
+                        var date = day.getDate();
+                        var orderDate = this.formatDate(year,month,date);
+                        var number = value;
+                        var json = {orderDate, number}; // es6 对象的简化写法,变量名为key, 变量值为value
+                        // 提交设置
+                        axios.post('/orderSetting/editNumberByDate.do',json).then(res => {
+                            this.$message({
+                                message: res.data.message,
+                                type: res.data.flag?"success":"error"
+                            });
+                            if(res.data.flag){
+                                this.getDataByMonth();
+                            }
+                        })
+                    }).catch(() => {
+
+                    });
                 },
 				//上传之前进行文件格式校验
                 beforeUpload(file){

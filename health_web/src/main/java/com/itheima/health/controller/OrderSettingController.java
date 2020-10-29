@@ -6,10 +6,7 @@ import com.itheima.health.entity.Result;
 import com.itheima.health.pojo.OrderSetting;
 import com.itheima.health.service.OrderSettingService;
 import com.itheima.health.utils.POIUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -63,5 +60,15 @@ public class OrderSettingController {
         // 调用服务端查询
         List<Map> data = orderSettingService.getOrderSettingByMonth(month);
         return new Result(true, MessageConstant.GET_ORDERSETTING_SUCCESS,data);
+    }
+
+    /**
+     * 基于日历的预约设置
+     * @return
+     */
+    @PostMapping("editNumberByDate")
+    public Result editNumberByDate(@RequestBody OrderSetting orderSetting){
+        orderSettingService.editNumberByDate(orderSetting);
+        return new Result(true,MessageConstant.ORDERSETTING_SUCCESS);
     }
 }

@@ -31,4 +31,5 @@ public interface OrderSettingDao {
      * @return
      */
     List<OrderSetting> getOrderSettingByMonth(String month);
+
 }
