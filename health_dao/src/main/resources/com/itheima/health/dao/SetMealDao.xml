@@ -58,5 +58,10 @@
     <!--查数据中套餐的所有图片-->
     <select id="findImg" resultType="String">
         select img from t_setmeal
-</select>
+    </select>
+
+    <!--查询所有的套餐-->
+    <select id="findAll" resultType="SetMeal">
+    select * from t_setmeal
+    </select>
 </mapper>

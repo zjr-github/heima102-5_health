@@ -124,4 +124,9 @@ public class SetMealServiceImpl implements SetMealService {
     public List<String> findImg() {
         return setMealDao.findImg();
     }
+
+    @Override
+    public List<SetMeal> getSetmeal() {
+        return setMealDao.findAll();
+    }
 }

@@ -72,4 +72,9 @@ public interface SetMealDao {
      */
     List<String> findImg();
 
+    /**
+     * 查询所有的套餐
+     * @return
+     */
+    List<SetMeal> findAll();
 }
