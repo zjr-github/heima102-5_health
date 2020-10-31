@@ -31,5 +31,10 @@ public interface OrderSettingDao {
      * @return
      */
     List<OrderSetting> getOrderSettingByMonth(String month);
-
+    /**
+     * 更新已预约人数，如果成功则返回1，没有更新到数据则返回0
+     * @param orderSetting
+     * @return
+     */
+    int editReservationsByOrderDate(OrderSetting orderSetting);
 }

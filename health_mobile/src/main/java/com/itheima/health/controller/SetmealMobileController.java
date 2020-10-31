@@ -31,4 +31,32 @@ public class SetmealMobileController {
         setMeals.forEach(s -> s.setImg(QiNiuUtils.DOMAIN+s.getImg()));
         return new Result(true, MessageConstant.GET_SETMEAL_LIST_SUCCESS,setMeals);
     }
+
+    /**
+     * 根据套餐id查询套餐详情信息
+     * @param id
+     * @return
+     */
+    @GetMapping("findDetailById")
+    public Result findDetailById(int id){
+        // 调用服务查询详情
+        SetMeal setMeal = setMealService.findDetailById(id);
+        // 设置图片的完整路径
+        setMeal.setImg(QiNiuUtils.DOMAIN+setMeal.getImg());
+        return new Result(true,MessageConstant.QUERY_SETMEAL_SUCCESS,setMeal);
+    }
+
+    /**
+     * 套餐基本信息
+     * @param id
+     * @return
+     */
+    @GetMapping("findById")
+    public Result findById(int id){
+        // 调用服务查询
+        SetMeal s = setMealService.findById(id);
+        // 图片的完整路径
+        s.setImg(QiNiuUtils.DOMAIN+s.getImg());
+        return new Result(true, MessageConstant.QUERY_SETMEAL_SUCCESS,s);
+    }
 }

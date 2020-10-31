@@ -61,4 +61,10 @@ public interface SetMealService {
      */
     List<SetMeal> getSetmeal();
 
+    /**
+     * 根据套餐id查询套餐详情信息
+     * @param id
+     * @return
+     */
+    SetMeal findDetailById(int id);
 }
