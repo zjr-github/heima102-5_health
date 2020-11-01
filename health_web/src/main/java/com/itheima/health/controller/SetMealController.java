@@ -5,9 +5,11 @@ import com.itheima.health.constant.MessageConstant;
 import com.itheima.health.entity.PageResult;
 import com.itheima.health.entity.QueryPageBean;
 import com.itheima.health.entity.Result;
+import com.itheima.health.exception.HealthException;
 import com.itheima.health.pojo.SetMeal;
 import com.itheima.health.service.SetMealService;
 import com.itheima.health.utils.QiNiuUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -115,7 +117,8 @@ public class SetMealController {
      * @return
      */
     @GetMapping("deleteById")
-    public Result deleteById(int id){
+    @PreAuthorize("hasPermission('SETMEAL_DELETE')")
+    public Result deleteById(int id) throws HealthException {
         setMealService.deleteById(id);
         return new Result(true,MessageConstant.DELETE_SETMEAL_SUCCESS);
     }
