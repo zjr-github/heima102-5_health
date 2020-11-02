@@ -117,7 +117,7 @@ public class SetMealController {
      * @return
      */
     @GetMapping("deleteById")
-    @PreAuthorize("hasPermission('SETMEAL_DELETE')")
+    @PreAuthorize("hasAuthority('SETMEAL_DELETE')")
     public Result deleteById(int id) throws HealthException {
         setMealService.deleteById(id);
         return new Result(true,MessageConstant.DELETE_SETMEAL_SUCCESS);

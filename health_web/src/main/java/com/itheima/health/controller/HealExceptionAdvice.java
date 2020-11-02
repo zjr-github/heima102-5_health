@@ -33,11 +33,11 @@ public class HealExceptionAdvice {
         return new Result(false,e.getMessage());
     }
 
-    @ExceptionHandler(Exception.class)
+    /*@ExceptionHandler(Exception.class)
     public Result handleException(Exception e){
         log.error("发生异常",e);
         return new Result(false,"发生未知错误，操作失败，请联系管理员");
-    }
+    }*/
 
     /**
      * 密码错误
