@@ -27,6 +27,7 @@ public class SpringSecurityUserService implements UserDetailsService {
 
     /**
      * 提供登陆用户信息  username password 权限集合 authorities
+     *
      * @param username
      * @return
      * @throws UsernameNotFoundException
@@ -65,7 +66,7 @@ public class SpringSecurityUserService implements UserDetailsService {
                     }
                 }
             }
-            return new User(username,password,authorities);
+            return new User(username, password, authorities);
         }
         // 返回null, 限制访问
         return null;

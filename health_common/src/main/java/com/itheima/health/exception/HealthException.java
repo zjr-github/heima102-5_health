@@ -7,7 +7,7 @@ package com.itheima.health.exception;
  * 终止已经不符合业务逻辑的代码
  */
 public class HealthException extends RuntimeException {
-    public HealthException(String message){
+    public HealthException(String message) {
         super(message);
     }
 }

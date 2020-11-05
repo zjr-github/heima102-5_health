@@ -31,16 +31,17 @@ public class LoginController {
 
     /**
      * 快速登录验证
+     *
      * @param loginInfo
      * @param res
      * @return
      */
     @PostMapping("check")
-    public Result checkMember(@RequestBody Map<String,String> loginInfo, HttpServletResponse res){
+    public Result checkMember(@RequestBody Map<String, String> loginInfo, HttpServletResponse res) {
         String telephone = loginInfo.get("telephone");
         String validateCode = loginInfo.get("validateCode");
         // 验证码的验证
-        String key = RedisMessageConstant.SENDTYPE_LOGIN+"_"+telephone;
+        String key = RedisMessageConstant.SENDTYPE_LOGIN + "_" + telephone;
         Jedis jedis = jedisPool.getResource();
         // 获取 redis中的验证码
         String codeInRedis = jedis.get(key);
@@ -48,7 +49,7 @@ public class LoginController {
             // 失效或没有发送
             return new Result(false, "请点击发送验证码");
         }
-        if (!validateCode.equals(codeInRedis)){
+        if (!validateCode.equals(codeInRedis)) {
             return new Result(false, "验证码不正确");
         }
         jedis.del(key);// 清除验证码，已经使用过了
@@ -64,8 +65,8 @@ public class LoginController {
             memberService.add(member);
         }
         // 跟踪记录的手机号码，代表着会员
-        Cookie cookie = new Cookie("login_member_telephone",telephone);
-        cookie.setMaxAge(30*24*60*60); // 存1个月
+        Cookie cookie = new Cookie("login_member_telephone", telephone);
+        cookie.setMaxAge(30 * 24 * 60 * 60); // 存1个月
         cookie.setPath("/"); // 访问的路径 根路径下时 网站的所有路径 都会发送这个cookie
         res.addCookie(cookie);
         return new Result(true, MessageConstant.LOGIN_SUCCESS);

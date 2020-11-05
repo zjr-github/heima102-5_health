@@ -13,12 +13,14 @@ import java.util.List;
 public interface CheckItemService {
     /**
      * 查询所有的检查项
+     *
      * @return
      */
     List<CheckItem> findAll();
 
     /**
      * 新增检查项
+     *
      * @param checkItem
      * @return
      */
@@ -26,19 +28,22 @@ public interface CheckItemService {
 
     /**
      * 分页条件查询
+     *
      * @param queryPageBean
      * @return
      */
     PageResult<CheckItem> findPage(QueryPageBean queryPageBean);
 
     /**
-     *删除检查项
+     * 删除检查项
+     *
      * @param id
      */
     void deleteById(int id) throws HealthException;
 
     /**
      * 通过id查询
+     *
      * @param id
      * @return
      */
@@ -46,6 +51,7 @@ public interface CheckItemService {
 
     /**
      * 编辑检查项
+     *
      * @param checkItem
      */
     void update(CheckItem checkItem);

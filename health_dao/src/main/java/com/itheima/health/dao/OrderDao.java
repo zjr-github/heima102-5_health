@@ -9,12 +9,14 @@ import java.util.Map;
 public interface OrderDao {
     /**
      * 添加订单
+     *
      * @param order
      */
     void add(Order order);
 
     /**
      * 条件查询
+     *
      * @param order
      * @return
      */
@@ -22,23 +24,30 @@ public interface OrderDao {
 
     /**
      * 获取订单详情
+     *
      * @param id
      * @return
      */
     Map findById4Detail(Integer id);
 
     Integer findOrderCountByDate(String date);
+
     Integer findOrderCountAfterDate(String date);
+
     Integer findVisitsCountByDate(String date);
+
     Integer findVisitsCountAfterDate(String date);
 
     /**
      * 获取热门套餐
+     *
      * @return
      */
-    List<Map<String,Object>> findHotSetmeal();
+    List<Map<String, Object>> findHotSetmeal();
+
     /**
      * 查询某段时间的预约数
+     *
      * @param startDate
      * @param endDate
      * @return

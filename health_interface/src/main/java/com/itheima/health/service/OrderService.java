@@ -7,7 +7,8 @@ import java.util.Map;
 
 public interface OrderService {
     /**
-     *提交体检预约
+     * 提交体检预约
+     *
      * @param orderInfo
      * @return
      */
@@ -15,6 +16,7 @@ public interface OrderService {
 
     /**
      * 预约成功展示
+     *
      * @param id
      * @return
      */

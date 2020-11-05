@@ -8,7 +8,7 @@
         insert into t_setmeal (name,code,helpCode,sex,age,price,remark,attention,img)
         values(#{name},#{code},#{helpCode},#{sex},#{age},#{price},#{remark},#{attention},#{img})
     </insert>
-    
+
     <!--添加套餐与检查组的关系-->
     <insert id="addSetMealCheckGroup" parameterType="int">
         insert into t_setmeal_checkgroup (setmeal_id, checkgroup_id)

@@ -20,8 +20,10 @@ import java.util.List;
 public class CheckGroupServiceImpl implements CheckGroupService {
     @Autowired
     private CheckGroupDao checkGroupDao;
+
     /**
      * 新增检查组
+     *
      * @param checkGroup
      * @param checkItemIds
      */
@@ -37,13 +39,14 @@ public class CheckGroupServiceImpl implements CheckGroupService {
             // 有钩选
             for (Integer checkItemId : checkItemIds) {
                 //添加检查组与检查项的关系
-                checkGroupDao.addCheckGroupCheckItem(checkGroupId,checkItemId);
+                checkGroupDao.addCheckGroupCheckItem(checkGroupId, checkItemId);
             }
         }
     }
 
     /**
      * 分页条件查询
+     *
      * @param queryPageBean
      * @return
      */
@@ -52,17 +55,18 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         // 使用PageHelper.startPage
         PageHelper.startPage(queryPageBean.getCurrentPage(), queryPageBean.getPageSize());
         // 有查询条件的处理, 模糊查询
-        if(!StringUtil.isEmpty(queryPageBean.getQueryString())){
+        if (!StringUtil.isEmpty(queryPageBean.getQueryString())) {
             // 拼接%
-            queryPageBean.setQueryString("%" + queryPageBean.getQueryString()+ "%");
+            queryPageBean.setQueryString("%" + queryPageBean.getQueryString() + "%");
         }
         // 紧接着的查询会被分页
         Page<CheckGroup> page = checkGroupDao.findByCondition(queryPageBean.getQueryString());
-        return new PageResult<CheckGroup>(page.getTotal(),page.getResult());
+        return new PageResult<CheckGroup>(page.getTotal(), page.getResult());
     }
 
     /**
      * 通过id获取检查组
+     *
      * @param checkGroupId
      * @return
      */
@@ -73,6 +77,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
 
     /**
      * 通过检查组id查询选中的检查项id
+     *
      * @param checkGroupId
      * @return
      */
@@ -84,6 +89,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
 
     /**
      * 编辑检查组提交
+     *
      * @param checkGroup
      * @param checkItemIds
      */
@@ -97,13 +103,14 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         // 建立新关系
         if (checkItemIds != null) {
             for (Integer checkItemId : checkItemIds) {
-                checkGroupDao.addCheckGroupCheckItem(checkGroup.getId(),checkItemId);
+                checkGroupDao.addCheckGroupCheckItem(checkGroup.getId(), checkItemId);
             }
         }
     }
 
     /**
      * 删除检查组
+     *
      * @param id
      * @throws HealthException
      */
@@ -112,7 +119,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     public void deleteById(int id) {
         // 检查 这个检查组是否被套餐使用了
         int cnt = checkGroupDao.findSetMealCountByCheckGroupId(id);
-        if (cnt>0) {
+        if (cnt > 0) {
             // 被使用了
             throw new HealthException(MessageConstant.CHECKGROUP_IN_USE);
         }
@@ -124,6 +131,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
 
     /**
      * 查询所有检查组
+     *
      * @return
      */
     @Override

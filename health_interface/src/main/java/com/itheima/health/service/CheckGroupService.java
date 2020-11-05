@@ -10,6 +10,7 @@ import java.util.List;
 public interface CheckGroupService {
     /**
      * 新增检查组
+     *
      * @param checkGroup
      * @param checkItemIds
      */
@@ -17,6 +18,7 @@ public interface CheckGroupService {
 
     /**
      * 分页条件查询
+     *
      * @param queryPageBean
      * @return
      */
@@ -24,6 +26,7 @@ public interface CheckGroupService {
 
     /**
      * 通过id获取检查组
+     *
      * @param checkGroupId
      * @return
      */
@@ -31,6 +34,7 @@ public interface CheckGroupService {
 
     /**
      * 通过检查组id查询选中的检查项id
+     *
      * @param checkGroupId
      * @return
      */
@@ -38,6 +42,7 @@ public interface CheckGroupService {
 
     /**
      * 编辑检查组提交
+     *
      * @param checkGroup
      * @param checkItemIds
      */
@@ -45,13 +50,14 @@ public interface CheckGroupService {
 
     /**
      * 删除检查组
-     * @param id
-     * 【注意】这里的异常是我们自己抛出的异常类
+     *
+     * @param id 【注意】这里的异常是我们自己抛出的异常类
      */
     void deleteById(int id) throws HealthException;
 
     /**
      * 查询所有检查组
+     *
      * @return
      */
     List<CheckGroup> findAll();

@@ -17,6 +17,7 @@ public class MemberServiceImpl implements MemberService {
 
     /**
      * 通过手机号查询会员是否存在
+     *
      * @param telephone
      * @return
      */
@@ -27,6 +28,7 @@ public class MemberServiceImpl implements MemberService {
 
     /**
      * 添加会员
+     *
      * @param member
      */
     @Override
@@ -36,15 +38,16 @@ public class MemberServiceImpl implements MemberService {
 
     /**
      * 统计过去一年的会员总数
+     *
      * @param months
      * @return
      */
     @Override
     public List<Integer> getMemberReport(List<String> months) {
         List<Integer> list = new ArrayList<>();
-        months.forEach(month->{
+        months.forEach(month -> {
             // 查询到每个月最后一天为止的会员总数量
-            list.add(memberDao.findMemberCountBeforeDate(month+"-31"));
+            list.add(memberDao.findMemberCountBeforeDate(month + "-31"));
         });
         return list;
     }

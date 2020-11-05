@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @Service(interfaceClass = ReportService.class)
 public class ReportServiceImpl implements ReportService {
 
@@ -21,7 +22,8 @@ public class ReportServiceImpl implements ReportService {
     private OrderDao orderDao;
 
     /**
-     *运营统计数据
+     * 运营统计数据
+     *
      * @return
      */
     @Override
@@ -56,7 +58,7 @@ public class ReportServiceImpl implements ReportService {
         //todayVisitsNumber 今日到诊数
         Integer todayVisitsNumber = orderDao.findVisitsCountByDate(today);
         //thisWeekOrderNumber 本周预约数
-        Integer thisWeekOrderNumber = orderDao.findOrderCountBetweenDate(monday,sunday);
+        Integer thisWeekOrderNumber = orderDao.findOrderCountBetweenDate(monday, sunday);
         //thisWeekVisitsNumber 本周到诊数
         Integer thisWeekVisitsNumber = orderDao.findVisitsCountAfterDate(monday);
         //thisMonthOrderNumber 本月预约数
@@ -65,21 +67,21 @@ public class ReportServiceImpl implements ReportService {
         Integer thisMonthVisitsNumber = orderDao.findVisitsCountAfterDate(firstDayOfThisMonth);
 
         // 热门套餐
-        List<Map<String,Object>> hotSetmeal = orderDao.findHotSetmeal();
+        List<Map<String, Object>> hotSetmeal = orderDao.findHotSetmeal();
 
         Map<String, Object> reportData = new HashMap<String, Object>(11);
-        reportData.put("reportDate",reportDate);
-        reportData.put("todayNewMember",todayNewMember);
-        reportData.put("totalMember",totalMember);
-        reportData.put("thisWeekNewMember",thisWeekNewMember);
-        reportData.put("thisMonthNewMember",thisMonthNewMember);
-        reportData.put("todayOrderNumber",todayOrderNumber);
-        reportData.put("todayVisitsNumber",todayVisitsNumber);
-        reportData.put("thisWeekOrderNumber",thisWeekOrderNumber);
-        reportData.put("thisWeekVisitsNumber",thisWeekVisitsNumber);
-        reportData.put("thisMonthOrderNumber",thisMonthOrderNumber);
-        reportData.put("thisMonthVisitsNumber",thisMonthVisitsNumber);
-        reportData.put("hotSetmeal",hotSetmeal);
+        reportData.put("reportDate", reportDate);
+        reportData.put("todayNewMember", todayNewMember);
+        reportData.put("totalMember", totalMember);
+        reportData.put("thisWeekNewMember", thisWeekNewMember);
+        reportData.put("thisMonthNewMember", thisMonthNewMember);
+        reportData.put("todayOrderNumber", todayOrderNumber);
+        reportData.put("todayVisitsNumber", todayVisitsNumber);
+        reportData.put("thisWeekOrderNumber", thisWeekOrderNumber);
+        reportData.put("thisWeekVisitsNumber", thisWeekVisitsNumber);
+        reportData.put("thisMonthOrderNumber", thisMonthOrderNumber);
+        reportData.put("thisMonthVisitsNumber", thisMonthVisitsNumber);
+        reportData.put("hotSetmeal", hotSetmeal);
 
         return reportData;
     }

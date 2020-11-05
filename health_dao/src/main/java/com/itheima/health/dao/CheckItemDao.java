@@ -8,12 +8,14 @@ import java.util.List;
 public interface CheckItemDao {
     /**
      * 查询 所有检查项
+     *
      * @return
      */
     List<CheckItem> findAll();
 
     /**
      * 新增检查项
+     *
      * @param checkItem
      * @return
      */
@@ -21,6 +23,7 @@ public interface CheckItemDao {
 
     /**
      * 分页条件查询
+     *
      * @param queryString
      * @return
      */
@@ -28,6 +31,7 @@ public interface CheckItemDao {
 
     /**
      * 检查 检查项是否被检查组使用了
+     *
      * @param id
      * @return
      */
@@ -35,12 +39,14 @@ public interface CheckItemDao {
 
     /**
      * 通过id删除检查项
+     *
      * @param id
      */
     void deleteById(int id);
 
     /**
      * 通过id查询
+     *
      * @param id
      * @return
      */
@@ -48,6 +54,7 @@ public interface CheckItemDao {
 
     /**
      * 编辑检查项
+     *
      * @param checkItem
      */
     void update(CheckItem checkItem);

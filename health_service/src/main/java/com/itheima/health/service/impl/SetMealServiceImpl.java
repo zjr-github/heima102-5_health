@@ -23,6 +23,7 @@ public class SetMealServiceImpl implements SetMealService {
 
     /**
      * 新增套餐
+     *
      * @param setMeal
      * @param checkGroupIds
      */
@@ -33,15 +34,16 @@ public class SetMealServiceImpl implements SetMealService {
         setMealDao.add(setMeal);
         // 获取套餐的id
         // 添加套餐与检查组的关系
-        if (checkGroupIds!=null){
+        if (checkGroupIds != null) {
             for (Integer checkGroupId : checkGroupIds) {
-                setMealDao.addSetMealCheckGroup(setMeal.getId(),checkGroupId);
+                setMealDao.addSetMealCheckGroup(setMeal.getId(), checkGroupId);
             }
         }
     }
 
     /**
      * 分页条件查询
+     *
      * @param queryPageBean
      * @return
      */
@@ -49,7 +51,7 @@ public class SetMealServiceImpl implements SetMealService {
     public PageResult<SetMeal> findPage(QueryPageBean queryPageBean) {
         PageHelper.startPage(queryPageBean.getCurrentPage(), queryPageBean.getPageSize());
         // 查询条件
-        if(!StringUtil.isEmpty(queryPageBean.getQueryString())){
+        if (!StringUtil.isEmpty(queryPageBean.getQueryString())) {
             // 模糊查询 %
             queryPageBean.setQueryString("%" + queryPageBean.getQueryString() + "%");
         }
@@ -60,6 +62,7 @@ public class SetMealServiceImpl implements SetMealService {
 
     /**
      * 通过id查询套餐信息
+     *
      * @param id
      * @return
      */
@@ -71,6 +74,7 @@ public class SetMealServiceImpl implements SetMealService {
 
     /**
      * 通过id查询选中的检查组ids
+     *
      * @param id
      * @return
      */
@@ -81,6 +85,7 @@ public class SetMealServiceImpl implements SetMealService {
 
     /**
      * 编辑体检套餐
+     *
      * @param setMeal
      * @param checkGroupIds
      */
@@ -94,21 +99,22 @@ public class SetMealServiceImpl implements SetMealService {
         // 添加新关系
         if (checkGroupIds != null) {
             for (Integer checkGroupId : checkGroupIds) {
-                setMealDao.addSetMealCheckGroup(setMeal.getId(),checkGroupId);
+                setMealDao.addSetMealCheckGroup(setMeal.getId(), checkGroupId);
             }
         }
     }
 
     /**
      * 删除套餐
+     *
      * @param id
      */
     @Override
     @Transactional
-    public void deleteById(int id) throws HealthException{
+    public void deleteById(int id) throws HealthException {
         // 是否存在订单，如果存在则不能删除
         int cnt = setMealDao.findOrderCountBySetMealId(id);
-        if (cnt>0){
+        if (cnt > 0) {
             throw new HealthException("已经有订单使用了这个套餐，不能删除！");
         }
         // 先删除套餐与检查组的关系
@@ -119,6 +125,7 @@ public class SetMealServiceImpl implements SetMealService {
 
     /**
      * 查数据中套餐的所有图片
+     *
      * @return
      */
     @Override
@@ -128,6 +135,7 @@ public class SetMealServiceImpl implements SetMealService {
 
     /**
      * 查询所有的套餐
+     *
      * @return
      */
     @Override
@@ -137,6 +145,7 @@ public class SetMealServiceImpl implements SetMealService {
 
     /**
      * 根据套餐id查询套餐详情信息
+     *
      * @param id
      * @return
      */
@@ -147,6 +156,7 @@ public class SetMealServiceImpl implements SetMealService {
 
     /**
      * 获取套餐的预约数量
+     *
      * @return
      */
     @Override

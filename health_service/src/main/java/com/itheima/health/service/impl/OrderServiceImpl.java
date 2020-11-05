@@ -32,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public Order submit(Map<String, String> orderInfo) throws HealthException{
+    public Order submit(Map<String, String> orderInfo) throws HealthException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         // 前端传过来的预约日期，字符串
         String orderDateStr = orderInfo.get("orderDate");
@@ -48,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
             //   - 不存在，报错，所选日期不能预约，请选择其它日期
             throw new HealthException("所选日期不能预约，请选择其它日期");
         }
-        if (orderSetting.getReservations()>orderSetting.getNumber()){
+        if (orderSetting.getReservations() > orderSetting.getNumber()) {
             //   - 存在 判断是否约满 reservations>=number
             //     - 约满，报错：所选日期预约已满，请选择其它日期
             throw new HealthException("所选日期，预约已满，请选择其它日期");
@@ -66,11 +66,11 @@ public class OrderServiceImpl implements OrderService {
             order.setMemberId(member.getId());
             List<Order> list = orderDao.findByCondition(order);
             // 有数据就是 重复预约
-            if (null != list && list.size() > 0){
+            if (null != list && list.size() > 0) {
                 //则报错，已经预约过了，不能重复预约
                 throw new HealthException("所选日期已经预约过了，不能重复预约");
             }
-        }else {
+        } else {
             //   - 不存在是不可能重复预约
             member = new Member();
             member.setName(orderInfo.get("name"));
@@ -79,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
             member.setIdCard(idCard);
             member.setPhoneNumber(telephone);
             member.setRegTime(new Date());
-            member.setPassword(idCard.substring(idCard.length()-6));
+            member.setPassword(idCard.substring(idCard.length() - 6));
             member.setRemark("微信公众号注册");
             //     添加新会员
             memberDao.add(member);
@@ -91,7 +91,7 @@ public class OrderServiceImpl implements OrderService {
         orderDao.add(order);
         //4. 通过日期更新已预约人数
         int affectedRowCount = orderSettingDao.editReservationsByOrderDate(orderSetting);
-        if(affectedRowCount == 0){
+        if (affectedRowCount == 0) {
             throw new HealthException("所选日期，预约已满，请选择其它日期");
         }
         return order;

@@ -1,5 +1,7 @@
 package com.itheima.health.pojo;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 
 /**
@@ -11,8 +13,9 @@ public class CheckItem implements Serializable {
     private String code;//项目编码
     private String name;//项目名称
     private String sex;//适用性别
+    @Min(10) @Max(100)
     private String age;//适用年龄（范围），例如：20-50
-    private Float  price;//价格
+    private Float price;//价格
     private String type;//检查项类型，分为检查和检验两种类型
     private String remark;//项目说明
     private String attention;//注意事项
