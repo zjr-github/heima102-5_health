@@ -160,5 +160,68 @@ public class ReportController {
 
     }
 
+    @GetMapping("/getMemberSex")
+    public Result getMemberSex(){
+        //创建一个存取会员性别的集合
+
+        List<String> setmemberSex=new ArrayList<>();
+        // 调用业务层,拿到会员表的性别和对应得数量
+        List<Map<String, Object>> setmemberCount= memberService.getMemberSex();
+        // 遍历从数据库拿到的数据,取出性别,并存到集合中
+        if(setmemberCount!=null){
+            for (Map<String, Object> member : setmemberCount) {
+                String  sex =(String) member.get("name");
+
+                setmemberSex.add(sex);
+
+
+            }
+
+
+
+        }
+
+        Map<String, Object> resultMap=new HashMap<>();
+
+        resultMap.put("setmemberSex",setmemberSex);
+        resultMap.put("setmemberCount",setmemberCount);
+
+       //返回Result
+        return new Result(true,"会员按照性别分组成功",resultMap);
+
+
+
+
+
+    }
+
+    @GetMapping("/getMemberAge")
+    public Result getMemberAge(){
+        //创建存储年龄段的集合
+        List<String> setmemberAge =new ArrayList<>();
+        //调用业务层,得到setmemberAgeCount数据
+       List<Map<String, Object>> setmemberAgeCount= memberService.getMemberAge();
+
+       if(setmemberAgeCount!=null){
+           for (Map<String, Object> stringObjectMap : setmemberAgeCount) {
+               String age = (String)stringObjectMap.get("name");
+                setmemberAge.add(age);
+
+           }
+
+
+       }
+       //创建返回集合
+        Map<String,Object> resultMap=new HashMap<>();
+       resultMap.put("setmemberAge",setmemberAge);
+       resultMap.put("setmemberAgeCount",setmemberAgeCount);
+
+
+       return new Result(true,"按照年龄段分组成功",resultMap);
+
+
+    }
+
+
 
 }
