@@ -233,6 +233,14 @@
                 } else {
                     this.$message.error(res.data.message);
                 }
+            }),
+            //不同用户展示不同菜单
+            axios.get("/menu/showMenu4User.do").then(res => {
+                if (res.data.flag) {
+                    this.menuList = res.data.data;
+                } else {
+                    this.$message.error(res.data.message);
+                }
             })
         }
     });
