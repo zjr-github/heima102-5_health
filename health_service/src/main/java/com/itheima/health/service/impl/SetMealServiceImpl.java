@@ -164,8 +164,10 @@ public class SetMealServiceImpl implements SetMealService {
                 //存入redis中
                 jedis.set("setmealList", JSON.toJSONString(setMealListInDb));
             }
+			jedis.close();
             return setMealListInDb;
         }
+		jedis.close();
         return setmealInRedis;
     }
 
@@ -193,11 +195,14 @@ public class SetMealServiceImpl implements SetMealService {
                 jedis.setex(key4User, 2 * 60, "");
                 throw new HealthException("查询的套餐不存在");
             }
+			jedis.close();
             return setmealInDb;
         }
         //如果存在
         SetMeal setmealInRedis = JSON.parseObject(jedis.get(key4User), SetMeal.class);
+		jedis.close();
         return setmealInRedis;
+
     }
 
     /**
