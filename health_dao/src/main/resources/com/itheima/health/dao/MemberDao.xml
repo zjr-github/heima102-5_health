@@ -98,4 +98,13 @@
         select count(id) from t_member
     </select>
 
+ <select id="getMemberSex" resultType="map">
+     select (case sex when 1 then '男' else '女' end) name,count(1) value from t_member  where sex is not null GROUP BY sex
+ </select>
+    <select id="getMemberAge" resultType="map">
+        select nld as name,count(1) as value from (select case when t.age&gt;=0 and t.age&lt;=18 then '0-18' when t.age&gt;=19 and t.age&lt;=30 then'19-30' when t.age&gt;=31 and t.age&lt;=45 then'31-45' when t.age&gt;45 then '>45'   end as nld  from(select (select timestampdiff(YEAR,birthday,DATE_FORMAT(NOW(), '%Y-%m-%d'))) as age from t_member m  where birthday)as t ) a GROUP BY nld
+
+    </select>
+
+
 </mapper>

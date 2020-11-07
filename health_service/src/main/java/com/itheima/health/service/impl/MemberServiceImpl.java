@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service(interfaceClass = MemberService.class)
 public class MemberServiceImpl implements MemberService {
@@ -50,5 +51,15 @@ public class MemberServiceImpl implements MemberService {
             list.add(memberDao.findMemberCountBeforeDate(month + "-31"));
         });
         return list;
+    }
+
+    @Override
+    public List<Map<String, Object>> getMemberSex() {
+        return memberDao.getMemberSex();
+    }
+
+    @Override
+    public List<Map<String, Object>> getMemberAge() {
+        return memberDao.getMemberAge();
     }
 }
