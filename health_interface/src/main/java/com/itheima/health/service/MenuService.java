@@ -6,5 +6,5 @@ import com.itheima.health.pojo.Menu;
 import java.util.List;
 
 public interface MenuService {
-    List<Menu> findByUserId(Integer id) throws HealthException;
+    List<Menu> findByUserId(String username) throws HealthException;
 }

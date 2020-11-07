@@ -5,5 +5,5 @@ import com.itheima.health.pojo.Menu;
 import java.util.List;
 
 public interface MenuDao {
-    List<Menu> findByUserId(Integer id);
+    List<Menu> findByUserId(String username);
 }
