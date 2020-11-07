@@ -45,19 +45,19 @@
 <body class="hold-transition">
 <div id="app">
     <div class="content-header">
-        <h1>预约管理
-            <small>检查组管理</small>
+        <h1>系统管理
+            <small>角色管理</small>
         </h1>
         <el-breadcrumb separator-class="el-icon-arrow-right" class="breadcrumb">
             <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>预约管理</el-breadcrumb-item>
-            <el-breadcrumb-item>检查组管理</el-breadcrumb-item>
+            <el-breadcrumb-item>系统管理</el-breadcrumb-item>
+            <el-breadcrumb-item>角色管理</el-breadcrumb-item>
         </el-breadcrumb>
     </div>
     <div class="app-container">
         <div class="box">
             <div class="filter-container">
-                <el-input placeholder="编码/名称/助记码" v-model="pagination.queryString" style="width: 200px;"
+                <el-input placeholder="name/keyword" v-model="pagination.queryString" style="width: 200px;"
                           class="filter-item" @keyup.enter.native="handleFilter"></el-input>
                 <el-button @click="findPage()" class="dalfBut">查询</el-button>
                 <el-button type="primary" class="butT" @click="handleCreate()">新建</el-button>
@@ -84,9 +84,9 @@
                         :total="pagination.total">
                 </el-pagination>
             </div>
-            <!-- 修改标签弹层 -->
+            <!-- 新增标签弹层 -->
             <div class="add-form">
-                <el-dialog title="新增检查组" :visible.sync="dialogFormVisible">
+                <el-dialog title="新增角色" :visible.sync="dialogFormVisible">
                     <template>
                         <el-tabs v-model="activeName" type="card">
                             <el-tab-pane label="基本信息" name="first">
@@ -177,7 +177,7 @@
 
             <!-- 修改标签弹层 -->
             <div class="add-form">
-                <el-dialog title="新增检查组" :visible.sync="dialogFormVisible4Edit">
+                <el-dialog title="编辑角色" :visible.sync="dialogFormVisible4Edit">
                     <template>
                         <el-tabs v-model="activeName" type="card">
                             <el-tab-pane label="基本信息" name="first">
@@ -297,7 +297,7 @@
         methods: {
             //编辑
             handleEdit() {
-                axios.post("../role/roleEdit.do?menuIds="+this.MenuIds+"&permissionIds="+this.PermissionIds,this.formData).then(response => {
+                axios.post("/role/roleEdit.do?menuIds="+this.MenuIds+"&permissionIds="+this.PermissionIds,this.formData).then(response => {
                     this.$message({
                         showClose: true,
                         message: response.data.message,
@@ -332,7 +332,7 @@
                     currentPage: this.pagination.currentPage,
                     pageSize: this.pagination.pageSize,
                     queryString: this.pagination.queryString
-                }
+                };
                 axios.post("/role/findPage.do", queryPageBean).then(response => {
                     this.pagination.total = response.data.data.total;
                     this.dataList = response.data.data.rows;
@@ -359,16 +359,16 @@
             handleUpdate(row) {
                 this.findAllPermissionAndFindAllMenu();
                 var id = row.id;
-                //1 通过检查组id获取检查组的基本信息并进行数据绑定(this.formData)
-                axios.get("/role/roleUpdateOne.do?id=" + id).then(response => {
+                //1 通过角色id获取角色的基本信息并进行数据绑定(this.formData)
+                axios.get("/role/selectRoleByRoleId.do?id=" + id).then(response => {
                     this.formData = response.data.data;
-                })
+                });
 
-                axios.get("/role/roleUpdateTwo.do?id=" + id).then(response => {
+                axios.get("/role/selectMenuIdByRoleId.do?id=" + id).then(response => {
                     this.MenuIds = response.data.data;
                 });
 
-                axios.get("/role/roleUpdateThree.do?id=" + id).then(response => {
+                axios.get("/role/selectPermissionIdByRoleId.do?id=" + id).then(response => {
                     this.PermissionIds = response.data.data;
                 });
 
