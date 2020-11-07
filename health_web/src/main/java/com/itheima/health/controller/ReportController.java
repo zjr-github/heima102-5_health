@@ -69,6 +69,31 @@ public class ReportController {
         return new Result(true, MessageConstant.GET_MEMBER_NUMBER_REPORT_SUCCESS, map);
     }
 
+    //根据传入的月份查询数据
+    @GetMapping("getMemberReportBetweenDays")
+    public Result getMemberReportBetweenDays(String start,String end) throws Exception {
+        //创建数组，封装两个时间段之间的月份
+        List<String> months = new ArrayList<>();
+        //根据字符串创建对应的日历对象
+        Calendar calendarStart = Calendar.getInstance();
+        Calendar calendarEnd = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        //设置日历
+        calendarStart.setTime(sdf.parse(start));
+        calendarEnd.setTime(sdf.parse(end));
+        //判断截止时间是否大于起始时间
+        while (calendarEnd.getTimeInMillis() >= calendarStart.getTimeInMillis()) {
+            months.add(sdf.format(calendarStart.getTime()));
+            calendarStart.add(Calendar.MONTH, 1);
+        }
+        List<Integer> memberCount = memberService.getMemberReport(months);
+        // 构建返回的数据
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("months", months);
+        paramMap.put("memberCount", memberCount);
+        return new Result(true, MessageConstant.GET_MEMBER_NUMBER_REPORT_SUCCESS, paramMap);
+    }
+
     /**
      * @return
      */
