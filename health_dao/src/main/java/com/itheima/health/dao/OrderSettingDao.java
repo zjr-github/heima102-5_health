@@ -43,4 +43,17 @@ public interface OrderSettingDao {
      * @return
      */
     int editReservationsByOrderDate(OrderSetting orderSetting);
+
+    /**
+     * 通过当天的日期查找之前的历史预约数据
+     * @param now
+     * @return
+     */
+    List<OrderSetting> findByOrderDateOfToday(String now);
+
+    /**
+     * 删除历史预约数据
+     * @param id
+     */
+    void deleteByTodayId(Integer id);
 }

@@ -90,4 +90,23 @@ public class OrderSettingServiceImpl implements OrderSettingService {
             orderSettingDao.add(orderSetting);
         }
     }
+
+    /**
+     * 通过当天的日期查找之前的历史预约数据
+     * @param now
+     * @return
+     */
+    @Override
+    public List<OrderSetting> findByOrderDateOfToday(String now) {
+        return orderSettingDao.findByOrderDateOfToday(now);
+    }
+
+    /**
+     * 删除历史预约数据
+     * @param id
+     */
+    @Override
+    public void deleteByTodayId(Integer id) {
+        orderSettingDao.deleteByTodayId(id);
+    }
 }

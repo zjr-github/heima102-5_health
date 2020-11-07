@@ -19,7 +19,7 @@ public class CleanImgJob {
     @Reference
     private SetMealService setMealService;
 
-    @Scheduled(cron = "0/30 * * * * ?")
+    /*@Scheduled(cron = "0/30 * * * * ?")*/
     public void cleanImg() {
         // 查出7牛上的所有图片
         List<String> imgIn7Niu = QiNiuUtils.listFile();

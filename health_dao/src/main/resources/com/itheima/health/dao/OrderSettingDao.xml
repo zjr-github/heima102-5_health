@@ -8,6 +8,11 @@
         select * From t_orderSetting where orderDate = #{orderDate}
     </select>
 
+    <!--通过当天的日期查找之前的历史预约数据-->
+    <select id="findByOrderDateOfToday" parameterType="String" resultType="OrderSetting">
+        select * From t_orderSetting where orderDate&lt;#{orderDate}
+    </select>
+
     <!--更新可预约数量-->
     <update id="updateNumber" parameterType="OrderSetting">
         update t_ordersetting set number=#{number} where orderDate = #{orderDate}
@@ -30,4 +35,9 @@
     <update id="editReservationsByOrderDate" parameterType="OrderSetting">
         update t_ordersetting set reservations = reservations+1 where orderDate = #{orderDate} and number>reservations
     </update>
+
+    <!--删除历史预约数据-->
+    <delete id="deleteByTodayId" parameterType="int" >
+        delete from t_ordersetting where id=#{id}
+    </delete>
 </mapper>
