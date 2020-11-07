@@ -26,11 +26,8 @@ public class SetmealMobileController {
      */
     @GetMapping("getSetmeal")
     public Result getSetmeal() {
-        // 查询所有的套餐
-        List<SetMeal> setMeals = setMealService.getSetmeal();
-        // 套餐里有图片有全路径吗? 拼接全路径
-        setMeals.forEach(s -> s.setImg(QiNiuUtils.DOMAIN + s.getImg()));
-        return new Result(true, MessageConstant.GET_SETMEAL_LIST_SUCCESS, setMeals);
+        List<SetMeal> setmeal = setMealService.getSetmeal();
+        return new Result(true, MessageConstant.QUERY_SETMEALLIST_SUCCESS, setmeal);
     }
 
     /**
@@ -41,11 +38,11 @@ public class SetmealMobileController {
      */
     @GetMapping("findDetailById")
     public Result findDetailById(int id) {
-        // 调用服务查询详情
-        SetMeal setMeal = setMealService.findDetailById(id);
-        // 设置图片的完整路径
-        setMeal.setImg(QiNiuUtils.DOMAIN + setMeal.getImg());
-        return new Result(true, MessageConstant.QUERY_SETMEAL_SUCCESS, setMeal);
+        SetMeal setmeal = setMealService.findDetailById(id);
+        if (setmeal == null) {
+            return new Result(false, "查询的套餐不存在！");
+        }
+        return new Result(true, MessageConstant.QUERY_SETMEAL_SUCCESS, setmeal);
     }
 
     /**

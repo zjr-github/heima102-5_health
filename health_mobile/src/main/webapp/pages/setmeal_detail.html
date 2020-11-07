@@ -88,6 +88,7 @@
                 if (res.data.flag) {
                     this.setmeal = res.data.data;
                 } else {
+                    location.href ="setmeal.html"
                     alert(res.data.message);
                 }
             });

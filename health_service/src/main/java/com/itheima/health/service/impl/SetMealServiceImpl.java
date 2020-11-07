@@ -1,6 +1,7 @@
 package com.itheima.health.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.StringUtil;
@@ -10,16 +11,24 @@ import com.itheima.health.entity.QueryPageBean;
 import com.itheima.health.exception.HealthException;
 import com.itheima.health.pojo.SetMeal;
 import com.itheima.health.service.SetMealService;
+import com.itheima.health.utils.QiNiuUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service(interfaceClass = SetMealService.class)
+@Transactional(readOnly = true)
 public class SetMealServiceImpl implements SetMealService {
     @Autowired
     private SetMealDao setMealDao;
+
+    @Autowired
+    private JedisPool jedisPool;
 
     /**
      * 新增套餐
@@ -140,7 +149,24 @@ public class SetMealServiceImpl implements SetMealService {
      */
     @Override
     public List<SetMeal> getSetmeal() {
-        return setMealDao.findAll();
+        //获取redis连接对象
+        Jedis jedis = jedisPool.getResource();
+        String key = "setmealList";
+        //获取redis中的套餐列表
+        List<SetMeal> setmealInRedis = JSON.parseObject(jedis.get(key), List.class);
+        if (null == setmealInRedis) {
+            //如果不存在
+            //则查询数据库
+            List<SetMeal> setMealListInDb = setMealDao.findAll();
+            //拼接完整图片路径
+            setMealListInDb.forEach(s -> s.setImg(QiNiuUtils.DOMAIN + s.getImg()));
+            if (null != setMealListInDb) {
+                //存入redis中
+                jedis.set("setmealList", JSON.toJSONString(setMealListInDb));
+            }
+            return setMealListInDb;
+        }
+        return setmealInRedis;
     }
 
     /**
@@ -150,8 +176,28 @@ public class SetMealServiceImpl implements SetMealService {
      * @return
      */
     @Override
-    public SetMeal findDetailById(int id) {
-        return setMealDao.findDetailById(id);
+    public SetMeal findDetailById(int id) throws HealthException {
+        Jedis jedis = jedisPool.getResource();
+        //获取前端传来的key
+        String key4User = "setmeal+setmealId=" + id;
+        //获取redis中的key
+        Set<String> keys = jedis.keys("*");
+        //判断redis中的key是否包含前端的key
+        if (!keys.contains(key4User)) {
+            //不存在 查询数据库
+            SetMeal setmealInDb = setMealDao.findDetailById(id);
+            if (null != setmealInDb) {
+                setmealInDb.setImg(QiNiuUtils.DOMAIN + setmealInDb.getImg());
+                jedis.setex(key4User, 2 * 60, JSON.toJSONString(setmealInDb));
+            } else {
+                jedis.setex(key4User, 2 * 60, "");
+                throw new HealthException("查询的套餐不存在");
+            }
+            return setmealInDb;
+        }
+        //如果存在
+        SetMeal setmealInRedis = JSON.parseObject(jedis.get(key4User), SetMeal.class);
+        return setmealInRedis;
     }
 
     /**

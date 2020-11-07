@@ -76,7 +76,7 @@ public interface SetMealService {
      * @param id
      * @return
      */
-    SetMeal findDetailById(int id);
+    SetMeal findDetailById(int id) throws HealthException;
 
     /**
      * 获取套餐的预约数量
