@@ -136,4 +136,9 @@ public class RoleServiceImpl implements RoleService {
         roleDao.deleteRoleById(id);
 
     }
+    //查找所有角色
+    @Override
+    public List<Role> findAll() {
+        return roleDao.findAll();
+    }
 }

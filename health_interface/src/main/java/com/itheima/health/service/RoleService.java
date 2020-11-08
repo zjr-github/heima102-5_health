@@ -28,4 +28,6 @@ public interface RoleService {
     void roleEdit(Integer[] menuIds, Integer[] permissionIds, Role role);
 
     void roleDelete(Integer id) throws HealthException;
+
+    List<Role> findAll();
 }

@@ -80,4 +80,10 @@ public class RoleController {
         roleService.roleDelete(id);
         return new Result(true,"删除角色成功");
     }
+    //查找所有角色
+    @GetMapping("/findAll")
+    public Result roleDelete(){
+        List<Role> all = roleService.findAll();
+        return new Result(true,"查找所有角色成功",all);
+    }
 }
