@@ -12,6 +12,30 @@
     <link rel="stylesheet" href="../plugins/elementui/index.css">
     <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .datatable {
+            position: relative;
+            box-sizing: border-box;
+            -webkit-box-flex: 1;
+            width: 100%;
+            max-width: 100%;
+            font-size: 14px;
+            color: rgb(96, 98, 102);
+            overflow: hidden;
+            flex: 1 1 0%;
+        }
+
+        .datatable td, .datatable th {
+            padding: 12px 0;
+            min-width: 0;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            text-overflow: ellipsis;
+            vertical-align: middle;
+            position: relative;
+            text-align: left;
+        }
+    </style>
 </head>
 <body class="hold-transition">
 <div id="app">
@@ -68,7 +92,7 @@
                     <template>
                         <el-tabs v-model="activeName" type="card">
                             <el-tab-pane label="基本信息" name="first">
-                                <el-form  label-position="right" label-width="100px">
+                                <el-form label-position="right" label-width="100px">
                                     <el-row>
                                         <el-col :span="12">
                                             <el-form-item label="用户名">
@@ -244,7 +268,7 @@
                 total: 0,//总记录数
                 queryString: null//查询条件
             },
-            activeName:[],
+            activeName: [],
             dataList: [],//列表数据
             formData: {},//表单数据
             tableData: [],//新增和编辑表单中对应的检查项列表数据
@@ -261,15 +285,15 @@
             handleEdit() {
 
                 //2 调用UserController中的更新方法
-                axios.post("../user/edit.do?roleIds="+this.roleIds, this.formData).then(response => {
+                axios.post("../user/edit.do?roleIds=" + this.roleIds, this.formData).then(response => {
                     //更新失败,则提示错误信息
-                    if(!response.data.flag){
+                    if (!response.data.flag) {
                         this.$message({
 
                             message: response.data.message,
                             type: 'error'
                         });
-                    }else{
+                    } else {
                         //更新成功,提示成功信息
                         this.$message({
 
@@ -287,7 +311,7 @@
             handleAdd() {
 
                 //2 ajax请求UserController中的保存方法,携带用户填写的数据,获取保存方法的返回值
-                axios.post("../user/add.do?roleIds="+this.roleIds, this.formData).then(response => {
+                axios.post("../user/add.do?roleIds=" + this.roleIds, this.formData).then(response => {
                     if (!response.data.flag) {
                         //2.1 保存失败,则需要提示错误信息
                         this.$message({
@@ -335,19 +359,19 @@
                     //3 获取方法的返回值,进行数据绑定
                     this.pagination.total = response.data.data.total;
                     this.dataList = response.data.data.rows;
-                }).catch((r)=>{
+                }).catch((r) => {
                     this.showMessage(r);
                 });
 
 
             },
             //权限不足提示
-            showMessage(r){
-                if(r == 'Error: Request failed with status code 403'){
+            showMessage(r) {
+                if (r == 'Error: Request failed with status code 403') {
                     //权限不足
                     this.$message.error('无访问权限');
                     return;
-                }else{
+                } else {
                     this.$message.error('未知错误');
                     return;
                 }
@@ -355,8 +379,8 @@
             // 重置表单
             resetForm() {
 
-                this.formData={};
-                this.roleIds =[];
+                this.formData = {};
+                this.roleIds = [];
                 //elementui官方的重置表单的方法
                 this.$refs["dataAddForm"].resetFields();
             },

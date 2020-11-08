@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itheima.health.dao.MenuDao">
-    <select id="findByUserId" parameterType="string" resultType="menu">
+    <select id="findByUserId" parameterType="string" resultType="Menu">
         SELECT 
         m.id,m.name,m.path,m.linkUrl,m.icon,m.parentMenuId
         from 
@@ -14,5 +14,46 @@
         t_user u 
         WHERE u.id = ur.user_id and ur.role_id = r.id and
         r.id = rm.role_id and rm.menu_id =m.id and u.username =#{username};
+    </select>
+
+    <!--菜单分页查询-->
+    <select id="findByCondition" resultType="Menu">
+        select * from t_menu
+    </select>
+
+    <!--新增菜单-->
+    <insert id="menuAdd" parameterType="Menu">
+        insert into t_menu(name,linkUrl,path,priority,description,icon,parentMenuId)
+        values (#{name},#{linkUrl},#{path},#{priority},#{description},#{icon},#{parentMenuId})
+    </insert>
+
+    <!--回显数据-->
+    <select id="menuFindById" parameterType="Menu" resultType="Menu">
+        select * from t_menu where id=#{id}
+    </select>
+
+    <!--编辑菜单-->
+    <update id="menuEdit" parameterType="Menu">
+        update t_menu
+        set name=#{name},linkUrl=#{linkUrl},path=#{path},priority=#{priority},description=#{description},icon=#{icon},parentMenuId=#{parentMenuId}
+        where id=#{id}
+    </update>
+
+    <!--通过id删除菜单与角色的关系-->
+    <delete id="deleteMenuRoles" parameterType="int">
+        delete from t_role_menu where menu_id=#{id}
+    </delete>
+
+    <!--通过id删除菜单-->
+    <delete id="menuDelete" parameterType="int">
+        delete from t_menu where id=#{id}
+    </delete>
+
+    <!--通过id查询与菜单关联的角色-->
+    <select id="menuFindByIdByRoles" parameterType="int" resultType="Role">
+        SELECT tr.* FROM t_menu tm
+        LEFT JOIN t_role_menu trm on tm.id=trm.menu_id
+        LEFT JOIN t_role tr on trm.role_id=tr.id
+        WHERE tm.id=#{id};
     </select>
 </mapper>

@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 分页条件查询
+     *
      * @param queryPageBean
      * @return
      */
@@ -52,6 +53,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 新增用户
+     *
      * @param user
      * @param roleIds
      */
@@ -64,13 +66,14 @@ public class UserServiceImpl implements UserService {
         // 添加用户与检查组的关系
         if (roleIds != null) {
             for (Integer roleId : roleIds) {
-                userDao.addUserRoleIds(user.getId(),roleId);
+                userDao.addUserRoleIds(user.getId(), roleId);
             }
         }
     }
 
     /**
      * 通过id查询用户信息
+     *
      * @param id
      * @return
      */
@@ -81,6 +84,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 通过id查询选中的角色ids
+     *
      * @param id
      * @return
      */
@@ -91,9 +95,9 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 编辑用户
+     *
      * @param user
      * @param roleIds
-     *
      */
     @Override
     @Transactional
@@ -105,23 +109,24 @@ public class UserServiceImpl implements UserService {
         // 添加新关系
         if (roleIds != null) {
             for (Integer roleId : roleIds) {
-                userDao.addUserRoleIds(user.getId(),roleId);
+                userDao.addUserRoleIds(user.getId(), roleId);
             }
         }
     }
 
     /**
      * 通过id删除用户
+     *
      * @param id
      */
     @Override
     @Transactional
-    public void deleteById(int id) throws HealthException{
+    public void deleteById(int id) throws HealthException {
         // 是否存在角色，如果存在则不能删除
-       int cnt = userDao.findRoleByUserId(id);
-       if (cnt>0){
-           throw new HealthException("已经有角色使用了这个用户，不能删除！");
-       }
+        int cnt = userDao.findRoleByUserId(id);
+        if (cnt > 0) {
+            throw new HealthException("已经有角色使用了这个用户，不能删除！");
+        }
         // 先删除用户与角色的关系
         userDao.deleteUserRoleIds(id);
         // 再删除用户

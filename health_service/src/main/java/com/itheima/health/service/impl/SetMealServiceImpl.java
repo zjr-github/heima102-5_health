@@ -162,7 +162,7 @@ public class SetMealServiceImpl implements SetMealService {
             setMealListInDb.forEach(s -> s.setImg(QiNiuUtils.DOMAIN + s.getImg()));
             if (null != setMealListInDb) {
                 //存入redis中
-                jedis.set("setmealList", JSON.toJSONString(setMealListInDb));
+                jedis.setex("setmealList",60, JSON.toJSONString(setMealListInDb));
             }
 			jedis.close();
             return setMealListInDb;
@@ -190,9 +190,9 @@ public class SetMealServiceImpl implements SetMealService {
             SetMeal setmealInDb = setMealDao.findDetailById(id);
             if (null != setmealInDb) {
                 setmealInDb.setImg(QiNiuUtils.DOMAIN + setmealInDb.getImg());
-                jedis.setex(key4User, 2 * 60, JSON.toJSONString(setmealInDb));
+                jedis.setex(key4User,  60, JSON.toJSONString(setmealInDb));
             } else {
-                jedis.setex(key4User, 2 * 60, "");
+                jedis.setex(key4User,  60, "");
                 throw new HealthException("查询的套餐不存在");
             }
 			jedis.close();
